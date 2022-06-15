@@ -1,0 +1,12 @@
+-
+  name: Deploy a web application
+  hosts: web_and_db
+  become: true
+  become_user: root
+  roles:
+    - python
+    - mysql_db
+    - flask_app
+    - alb
+    - alb_target
+    - mail

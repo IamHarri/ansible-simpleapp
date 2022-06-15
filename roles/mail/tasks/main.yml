@@ -1,0 +1,11 @@
+- name: Sending an e-mail using Gmail SMTP servers
+  mail:
+    host: "smtp.gmail.com"
+    port: 587
+    username: "{{ FROM_MAIL }}"
+    password: "{{ APP_PASS }}"
+    to: "Long <{{TO_MAIL}}>"
+    subject: Ansible-report
+    body: System {{ ansible_hostname }} has been successfully provisioned.
+  ignore_errors: yes
+

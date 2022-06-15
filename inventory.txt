@@ -1,0 +1,4 @@
+[web_and_db]
+target1 ansible_host=44.202.65.39
+target2 ansible_host=34.238.250.152
+

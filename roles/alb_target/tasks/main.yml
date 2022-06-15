@@ -1,0 +1,18 @@
+- name: Create a target group with instance targets
+  elb_target_group:
+    name: ansible-target
+    protocol: http
+    port: 5000
+    vpc_id: vpc-a19ff1dc
+    health_check_protocol: http
+    health_check_path: /how%20are%20you
+    successful_response_codes: "200,250-260"
+    targets:
+      - Id: i-00ae71dcb44a54130
+        Port: 5000
+      - Id: i-0f73e8532caec5437
+        Port: 5000
+    state: present
+    region: us-east-1
+    wait_timeout: 200
+    wait: True

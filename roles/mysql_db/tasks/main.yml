@@ -1,0 +1,50 @@
+---
+# tasks file for mysql_db
+- name: Install SQL database
+  apt: 
+    name: ['mysql-server','mysql-client'] 
+    state:  present
+  # with_items:
+  #   - mysql-server
+  #   - mysql-client
+
+- name:  Make sure pymysql is present
+  become: true
+  pip:
+    name: pymysql
+    state: present
+    executable: pip3
+-
+  name: start mysql Service
+  service:
+    name: mysql
+    state: started
+    enabled: yes
+
+- name: sql querry database
+  command: "{{ item }}"
+  with_items:
+    - mysql -e "CREATE DATABASE employee_db;"
+  ignore_errors: yes
+
+- name: create user
+  command: "{{ item }}"
+  with_items:
+    - mysql -e "GRANT ALL ON *.* to db_user@'%' IDENTIFIED BY 'Passw0rd';"  -e "USE employee_db;" -e "CREATE TABLE employees (name VARCHAR(20));"
+  ignore_errors: yes
+
+# - name: create database 
+#   become: true
+#   mysql_db:
+#     name: employee_db
+#     state: present
+
+# - name: create user
+#   become: true
+#   mysql_user:
+#     name: db_user
+#     password: Passw0rd
+#     state: present
+#     host: "%"
+#     priv: "*.*:ALL"
+
